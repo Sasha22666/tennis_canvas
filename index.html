@@ -18,23 +18,10 @@
         const WIDTH_FIELD = 800; //ширина поля
         const HEIGHT_FIELD = 400; //высота поля
         const RADIUS_BALL = 20; //радиус мяча
-        const WIDTH_RACKET = 7;
+        const WIDTH_RACKET = 7; //ширина ракетки
         const SDVIG = 3;
-        const HEIGHT_RACKET = 100;
+        const HEIGHT_RACKET = 100; //высота ракетки
         const HEIGHT_KONTEINER = HEIGHT_FIELD + NUMBER_SIZE;
-
-        // var RAF =
-        //     // находим, какой метод доступен
-        //     window.requestAnimationFrame ||
-        //     window.webkitRequestAnimationFrame ||
-        //     window.mozRequestAnimationFrame ||
-        //     window.oRequestAnimationFrame ||
-        //     window.msRequestAnimationFrame ||
-        //     // ни один не доступен
-        //     // будем работать просто по таймеру
-        //     function (callback) {
-        //         window.setTimeout(callback, 1000 / 60);
-        //     }
 
         let counterL = 0;
         let counterR = 0;
@@ -43,12 +30,10 @@
         const centerY = HEIGHT_FIELD / 2 + RADIUS_BALL * 2;
 
         const konteiner = document.createElement('canvas'); //контейнер, в котором игра
-        // konteiner.id = 'game';
         konteiner.width = WIDTH_FIELD;
         konteiner.height = HEIGHT_FIELD + NUMBER_SIZE;
         document.body.appendChild(konteiner);
 
-        // function drawGame() {
         const ctx = konteiner.getContext("2d");
 
         function drawRect(x, y, w, h, color) {
@@ -84,14 +69,9 @@
         ctx.font = 'normal normal ' + NUMBER_SIZE + 'px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-
-
-
-        // function updateCount() {
+       
         ctx.fillText(counterL + ':' + counterR, WIDTH_FIELD / 2, NUMBER_SIZE / 2);
-        // }
-
-        // updateCount();
+    
         var ballH = {
             posX: centerX,
             posY: centerY,
@@ -123,7 +103,6 @@
 
             update: function () {
                 drawRect(this.PosX, this.PosY, this.width, this.height, "blue");
-
             }
         };
 
@@ -136,7 +115,6 @@
 
             update: function () {
                 drawRect(this.PosX, this.PosY, this.width, this.height, "green");
-
             }
         };
 
@@ -145,46 +123,12 @@
             var mouseX = EO.offsetX;
             var mouseY = EO.offsetY;
             if (mouseX>0&mouseX<BUTTON_WIDTH&mouseY>0&mouseY<NUMBER_SIZE) {
-                
+ 
                 start();
             }
         });
-        // }
 
-
-
-
-        function start() {
-
-            ballH.posX = centerX;
-            ballH.posY = centerY;
-
-            do {
-                var speedXNotNull = randomDiap(-4, 4) * 2;
-                var speedYNotNull = randomDiap(-2, 2) * 2;
-            } while (speedXNotNull == 0 || speedYNotNull == 0);
-            ballH.speedX = speedXNotNull;
-            ballH.speedY = speedYNotNull;
-
-            function randomDiap(n, m) {
-                return Math.floor(Math.random() * (m - n + 1)) + n;
-            }
-
-        }
-
-
-
-
-        function tick() {
-
-            // drawGame();
-
-
-
-            racketL.PosY += racketL.Speed;
-            racketR.PosY += racketR.Speed;
-
-            window.addEventListener('keydown', function (EO) {
+         window.addEventListener('keydown', function (EO) {
                 EO = EO || window.event;
 
                 if (EO.keyCode === 17) {
@@ -218,6 +162,29 @@
                 }
 
             });
+
+        function start() {
+
+            ballH.posX = centerX;
+            ballH.posY = centerY;
+            do {
+                var speedXNotNull = randomDiap(-4, 4) * 2;
+                var speedYNotNull = randomDiap(-2, 2) * 2;
+            } while (speedXNotNull == 0 || speedYNotNull == 0);
+            ballH.speedX = speedXNotNull;
+            ballH.speedY = speedYNotNull;
+
+            function randomDiap(n, m) {
+                return Math.floor(Math.random() * (m - n + 1)) + n;
+            }
+        }
+
+        function tick() {
+
+            racketL.PosY += racketL.Speed;
+            racketR.PosY += racketR.Speed;
+
+           
 
             //ракетка ниже стены?            
             if (racketL.PosY <= NUMBER_SIZE) {
@@ -267,7 +234,6 @@
                     ctx.clearRect(WIDTH_FIELD/2-WIDTH_FIELD/10, 0, WIDTH_FIELD/5, NUMBER_SIZE);
                     ctx.fillStyle = 'black';
                     ctx.fillText(counterL + ':' + counterR, WIDTH_FIELD / 2, NUMBER_SIZE / 2);
-
                 }
             }
 
@@ -281,19 +247,15 @@
                 ballH.speedY = -ballH.speedY;
             }
 
-
             field.update();
             racketL.update();
             racketR.update();
             ballH.update();
 
-
             requestAnimationFrame(tick);
         }
 
         tick();
-
-
     </script>
 </body>
 
